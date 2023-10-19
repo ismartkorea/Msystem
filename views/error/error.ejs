@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>System 에러 메시지 안내 페이지</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <!--     Fonts and icons     -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+
+<div class="fh5co-loader"></div>
+
+<div id="fh5co-about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="row animate-box">
+                <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+                    <h2 class="ubar">에러</h2>
+                    <p>서비스를 이용해 주셔서 감사합니다.</p>
+                </div>
+            </div>
+            <div class="col-md-12 text-center">
+                에러입니다. 관리자에게 확인하세요.<br/>
+                에러 메시지 : <%=message%><br/>
+                에러 상태 : <%=error%><br/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+</div>
+
+</body>
+</html>

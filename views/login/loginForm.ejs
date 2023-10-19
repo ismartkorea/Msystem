@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><%= title %></title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/vendor/fonts/circular-std/style.css">
+    <link rel="stylesheet" href="/assets/libs/css/style.css">
+    <link rel="stylesheet" href="/assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <style>
+    html,
+    body {
+        height: 100%;
+    }
+    body {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    </style>
+    <!-- scripts -->
+    <script src="/assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>    
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            const formtag = document.getElementById("frm");
+            init();
+
+            // form submit
+            $("#submitBtn").on("click",function() {
+                //e.preventDefault();
+
+                var dataVals = {};
+
+                if($("#usrId").val()==null || $("#usrId").val()=="") {
+                    alert("아이디를 입력하여 주세요.");
+                    $("#usrId").focus();
+                    return;
+                }
+                if($("#usrPwd").val()==null || $("#usrPwd").val()=="") {
+                    alert("비밀번호를 입력하여 주세요.");
+                    $("#usrPwd").focus();
+                    return;
+                }
+
+                dataVals = {usrId : $("#usrId").val(), usrPwd : $("#usrPwd").val() };
+                // 데이타 전송 처리.
+                $.ajax({
+                    url : "/login/process",
+                    type : "post",
+                    dataType : "json",
+                    data : dataVals,
+                    success : function(data) {
+console.log(">>> result data = " + data.result);
+                        if(data.result == "err0") {
+                            alert("아이디가 틀립니다. 다시 확인하세요");
+                            $("#usrId").focus();
+                        }
+                        if(data.result == "err1") {
+                            alert("비밀번호가 틀립니다. 다시 확인하세요");
+                            $("#usrPwd").focus();
+                        }
+                        if(data.result == "NO") {
+                                //console.log(">>> 데이타 없음");
+                                alert("해당되는 회원님이 없습니다.\n다시 한번 확인하시고 입력하여 보세요.");
+                                $("#usrId").focus();
+                        }                        
+                        if(data.result == "OK") {
+                            alert("환영합니다! " + data.session.usrId + " 님");
+                            location.href = '/';
+                        }
+                    },
+                    error : function(err) {
+                        alert("errCode : " + JSON.stringify(err));
+                    }
+                });
+
+            });
+
+
+            // 데이터 전송, 페이지 전환 방지
+            function handleSubmit(event) {
+                event.preventDefault();
+            }
+            
+            // 등록
+            function init() {
+                formtag.addEventListener('submit', handleSubmit);
+            }            
+        });
+    </script>    
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- login page  -->
+    <!-- ============================================================== -->
+    <div class="splash-container">
+        <div class="card ">
+            <div class="card-header text-center"><a href="/"><img class="logo-img" src="/assets/images/logo.png" alt="logo"></a><span class="splash-description">사용자 정보를 입력하세요.</span></div>
+            <div class="card-body">
+                <form id="frm" name="frm" method="post">
+                    <div class="form-group">
+                        <input class="form-control form-control-lg" id="usrId" name="usrId" type="text" placeholder="사용자ID" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control form-control-lg" id="usrPwd" name="usrPwd" type="password" placeholder="패스워드">
+                    </div>
+                    <div class="form-group">
+                        <label class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox"><span class="custom-control-label">ID 저장</span>
+                        </label>
+                    </div>
+                    <button type="submit" id="submitBtn" name="submitBtn" class="btn btn-primary btn-lg btn-block">로그인</button>
+                </form>
+            </div>
+            <div class="card-footer bg-white p-0  ">
+                <div class="card-footer-item card-footer-item-bordered">
+                    <a href="#" class="footer-link">사용자 생성</a></div>
+                <div class="card-footer-item card-footer-item-bordered">
+                    <a href="#" class="footer-link">패스워드 찾기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+ 
+</html>
